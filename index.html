@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gita Marg| Universal Wisdom</title>
+    <title>Gita Marg | Universal Wisdom</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
     <style>
@@ -12,26 +12,21 @@
             --deep-saffron: #e76f51;
             --cream: #fdfaf5;
             --ink: #2c3e50;
-            --stone-bg: #f5f2eb;
-            --parchment: #fffdfa;
-            --border: #e2ddd3;
-        }
-
-        .dark {
             --stone-bg: #0a0a0c;
-            --ink: #e5e7eb;
-            --parchment: rgba(30, 30, 35, 0.85);
+            --parchment: rgba(30, 30, 35, 0.9);
             --border: #374151;
-            --cream: #18181b;
         }
 
         body {
             font-family: 'Lora', serif;
             background-color: var(--stone-bg);
-            color: var(--ink);
-            overflow-x: hidden;
-            transition: background-color 0.4s ease, color 0.4s ease;
+            color: #e5e7eb;
+            overflow: hidden;
+            transition: background-color 0.4s ease;
             position: relative;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         /* Divine Background Animation */
@@ -43,36 +38,36 @@
             height: 100%;
             z-index: -1;
             overflow: hidden;
-            background: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #0a0a0c 100%);
+            background: radial-gradient(circle at 50% 50%, #121220 0%, #050507 100%);
         }
 
         .aura {
             position: absolute;
-            width: 700px;
-            height: 700px;
-            background: radial-gradient(circle, rgba(244, 162, 97, 0.12) 0%, transparent 70%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(244, 162, 97, 0.08) 0%, transparent 70%);
             border-radius: 50%;
             filter: blur(100px);
             animation: moveAura 25s infinite alternate ease-in-out;
         }
 
         @keyframes moveAura {
-            0% { transform: translate(-20%, -10%); }
-            100% { transform: translate(30%, 40%); }
+            0% { transform: translate(-10%, -10%); }
+            100% { transform: translate(15%, 20%); }
         }
 
         .particle {
             position: absolute;
             background: white;
             border-radius: 50%;
-            opacity: 0.2;
+            opacity: 0.15;
             pointer-events: none;
             animation: floatUp var(--d) linear infinite;
         }
 
         @keyframes floatUp {
             from { transform: translateY(110vh) scale(0); opacity: 0; }
-            to { transform: translateY(-10vh) scale(1.2); opacity: 0.4; }
+            to { transform: translateY(-10vh) scale(1); opacity: 0.3; }
         }
 
         h1, h2, h3, .font-cinzel {
@@ -80,8 +75,14 @@
         }
 
         .chat-container {
+            flex: 1;
+            overflow-y: auto;
             scrollbar-width: thin;
             scrollbar-color: var(--saffron) transparent;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .chat-container::-webkit-scrollbar { width: 6px; }
@@ -89,18 +90,19 @@
 
         .message-bubble {
             max-width: 85%;
-            animation: fadeIn 0.5s ease-out forwards;
+            animation: fadeIn 0.4s ease-out forwards;
+            position: relative;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .parchment {
             background: var(--parchment);
             border: 1px solid var(--border);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
             backdrop-filter: blur(12px);
         }
 
@@ -117,62 +119,123 @@
 
         .mood-btn {
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            outline: none !important;
         }
 
         .mood-btn:hover {
-            transform: translateY(-5px) scale(1.02);
-            background: rgba(244, 162, 97, 0.15);
+            transform: translateY(-5px);
+            background: rgba(244, 162, 97, 0.12);
             border-color: var(--saffron);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
 
-        .shloka-box {
-            border-left: 4px solid var(--saffron);
-            padding: 1rem;
-            margin: 1rem 0;
-            background: rgba(244, 162, 97, 0.08);
-            font-style: italic;
-            color: var(--saffron);
-            font-size: 1.1rem;
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(20px);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+        .modal-content {
+            background: #151515;
+            border: 1px solid var(--border);
+            border-radius: 2.5rem;
+            max-width: 500px;
+            width: 100%;
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+        }
+
+        .message-row {
+            display: flex;
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 1.5rem;
+        }
+        .message-row.user { justify-content: flex-end; }
+        .message-row.model { justify-content: flex-start; }
+
+        .guide-text {
             line-height: 1.6;
+            font-size: 1.05rem;
+        }
+        
+        #messages-anchor {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        button:focus, textarea:focus {
+            outline: none;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col dark">
+<body class="min-h-screen">
 
-    <!-- Divine Animated Background -->
+    <!-- Instruction Pop-up -->
+    <div id="instruction-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 class="font-cinzel text-2xl text-orange-500 mb-4 uppercase tracking-wider">Divine Guidance</h3>
+            <p class="text-stone-300 leading-relaxed mb-8 italic text-base">
+                This AI guide provides suggestions based on the Bhagavad Gita. These are insights for your reflection. The path you choose to take is your own decision and your own dharma.
+            </p>
+            <button onclick="closeInstruction()" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-4 rounded-[1.2rem] transition-all shadow-2xl active:scale-95 text-base uppercase tracking-widest">
+                I Understand
+            </button>
+        </div>
+    </div>
+
+    <!-- Language Selection -->
+    <div id="language-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h3 class="font-cinzel text-xl text-orange-500 mb-2 uppercase tracking-wide">Select Language</h3>
+            <p class="text-stone-400 text-xs mb-6 uppercase tracking-[0.2em]">10 Divine Tongues</p>
+            <div class="grid grid-cols-2 gap-3 mb-4">
+                <button onclick="setLang('English')" class="bg-white/5 border border-white/10 p-3 rounded-xl hover:bg-orange-500/10 hover:border-orange-500 transition-all text-xs font-bold tracking-widest">English</button>
+                <button onclick="setLang('Hindi')" class="bg-white/5 border border-white/10 p-3 rounded-xl hover:bg-orange-500/10 hover:border-orange-500 transition-all text-xs font-bold tracking-widest">Hindi</button>
+                <button onclick="setLang('Gujarati')" class="bg-white/5 border border-white/10 p-3 rounded-xl hover:bg-orange-500/10 hover:border-orange-500 transition-all text-xs font-bold tracking-widest">Gujarati</button>
+                <button onclick="setLang('Sanskrit')" class="bg-white/5 border border-white/10 p-3 rounded-xl hover:bg-orange-500/10 hover:border-orange-500 transition-all text-xs font-bold tracking-widest">Sanskrit</button>
+                <button onclick="setLang('Marathi')" class="bg-white/5 border border-white/10 p-3 rounded-xl hover:bg-orange-500/10 hover:border-orange-500 transition-all text-xs font-bold tracking-widest">Marathi</button>
+                <button onclick="setLang('Tamil')" class="bg-white/5 border border-white/10 p-3 rounded-xl hover:bg-orange-500/10 hover:border-orange-500 transition-all text-xs font-bold tracking-widest">Tamil</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Divine Background -->
     <div class="divine-bg">
         <div class="aura" style="top: 5%; left: 10%;"></div>
-        <div class="aura" style="bottom: 5%; right: 5%; background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 70%);"></div>
+        <div class="aura" style="bottom: 10%; right: 10%; background: radial-gradient(circle, rgba(59, 130, 246, 0.06) 0%, transparent 70%);"></div>
         <div id="particle-container"></div>
     </div>
 
     <!-- Header -->
-    <header class="sticky top-0 z-30 py-4 px-6 border-b border-white/10 bg-black/50 backdrop-blur-2xl flex justify-between items-center">
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-orange-100 dark:bg-orange-900/40 rounded-full flex items-center justify-center text-orange-500 shadow-xl">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+    <header class="z-30 py-4 px-6 border-b border-white/10 bg-black/40 backdrop-blur-2xl flex justify-between items-center shrink-0">
+        <div class="flex items-center gap-4">
+            <div class="w-10 h-10 bg-orange-900/30 rounded-full flex items-center justify-center text-orange-500 shadow-xl border border-orange-500/20">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
                 </svg>
             </div>
             <div>
-                <h1 class="text-xl tracking-[0.25em] text-white uppercase font-bold">Gita GPT</h1>
-                <p class="text-[10px] text-stone-400 uppercase tracking-widest leading-none font-medium">Ancient Wisdom • Modern Guidance</p>
+                <h1 class="text-xl tracking-[0.3em] text-white uppercase font-bold leading-none">Gita GPT</h1>
+                <p class="text-[9px] text-orange-500 uppercase tracking-[0.4em] mt-1 font-bold">Divine Intelligence</p>
             </div>
         </div>
-        <div class="flex gap-2 md:gap-4 items-center">
-            <button id="reflection-btn" class="hidden md:flex items-center gap-2 text-[10px] uppercase font-bold text-orange-400 bg-orange-400/10 px-3 py-2 rounded-lg transition-all hover:bg-orange-400/20" title="Generate Meditative Insight">
+        <div class="flex gap-3 items-center">
+            <button id="reflection-btn" class="hidden md:flex items-center gap-2 text-[10px] uppercase font-bold text-orange-400 bg-orange-400/10 px-4 py-2.5 rounded-xl transition-all hover:bg-orange-400/20 border border-orange-400/20" title="Get Soul Insight">
                 ✨ Insight
             </button>
-            <button onclick="toggleTheme()" class="p-2.5 text-stone-400 hover:text-white transition-colors rounded-full">
-                <svg id="theme-icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z" />
-                </svg>
-            </button>
-            <button onclick="resetChat()" class="text-stone-400 hover:text-white p-2.5 transition-colors rounded-full">
+            <button onclick="resetChat()" class="text-stone-400 hover:text-white p-2.5 transition-colors rounded-full bg-white/5 border border-white/5">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                 </svg>
@@ -180,60 +243,65 @@
         </div>
     </header>
 
-    <!-- Main Content -->
+    <!-- Main Chat Content -->
     <main class="flex-grow flex flex-col overflow-hidden relative">
-        <div id="chat-window" class="chat-container flex-grow overflow-y-auto p-4 md:p-8 space-y-10">
+        <div id="chat-window" class="chat-container">
             
-            <!-- Daily Quote -->
-            <div id="daily-card" class="max-w-xl mx-auto parchment p-8 rounded-[2rem] text-center space-y-4 mb-6 border border-white/5">
-                <span class="text-[11px] uppercase tracking-[0.4em] text-orange-500 font-bold block">Thought of the Day</span>
-                <p id="daily-text" class="italic text-stone-200 text-xl leading-relaxed"></p>
-            </div>
-
-            <!-- Welcome Screen -->
-            <div id="welcome-message" class="max-w-3xl mx-auto text-center py-6 space-y-12">
-                <div class="space-y-4">
-                    <h2 class="text-4xl text-white font-cinzel tracking-wider uppercase">Speak, Arjun</h2>
-                    <p class="text-stone-400 leading-relaxed max-w-lg mx-auto italic text-lg">
-                        The chariot of wisdom is ready. Seek guidance in any language.
-                    </p>
+            <div id="welcome-content" class="max-w-4xl mx-auto w-full py-8 space-y-8 flex flex-col items-center">
+                <!-- Daily Quote Card -->
+                <div id="daily-card" class="w-full parchment p-8 rounded-[2.5rem] text-center space-y-4 border border-white/10">
+                    <span class="text-[10px] uppercase tracking-[0.5em] text-orange-500 font-bold block">Ethereal Thought</span>
+                    <p id="daily-text" class="italic text-stone-200 text-xl leading-relaxed font-medium"></p>
                 </div>
 
-                <!-- Mood Grid -->
-                <div class="space-y-8">
-                    <h3 class="text-xs uppercase tracking-[0.3em] text-stone-500 font-bold">What is the state of your mind?</h3>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <button onclick="prefillMood('🤔 CONFUSED', 'I am confused about a big life decision.')" class="mood-btn p-8 rounded-3xl flex flex-col items-center gap-4">
-                            <span class="text-3xl">🤔</span>
-                            <span class="text-xs font-bold uppercase tracking-widest text-stone-300">Confused</span>
-                        </button>
-                        <button onclick="prefillMood('😟 ANXIOUS', 'મને ભવિષ્યની ખૂબ ચિંતા થઈ રહી છે.')" class="mood-btn p-8 rounded-3xl flex flex-col items-center gap-4">
-                            <span class="text-3xl">😟</span>
-                            <span class="text-xs font-bold uppercase tracking-widest text-stone-300">Anxious</span>
-                        </button>
-                        <button onclick="prefillMood('🔥 ANGRY', 'मुझे बहुत गुस्सा आ रहा है, मन अशांत है।')" class="mood-btn p-8 rounded-3xl flex flex-col items-center gap-4">
-                            <span class="text-3xl">🔥</span>
-                            <span class="text-xs font-bold uppercase tracking-widest text-stone-300">Angry</span>
-                        </button>
-                        <button onclick="prefillMood('🧘 SEEKING', 'Help me find the true purpose of my existence.')" class="mood-btn p-8 rounded-3xl flex flex-col items-center gap-4">
-                            <span class="text-3xl">🧘</span>
-                            <span class="text-xs font-bold uppercase tracking-widest text-stone-300">Seeking</span>
-                        </button>
+                <!-- Welcome Screen -->
+                <div id="welcome-message" class="text-center space-y-12">
+                    <div class="space-y-4">
+                        <h2 class="text-3xl text-white font-cinzel tracking-[0.2em] uppercase font-bold">Speak, Arjun</h2>
+                        <p class="text-stone-400 leading-relaxed max-w-lg mx-auto italic text-lg opacity-80">
+                            The chariot of wisdom stands ready. Pour your soul into words.
+                        </p>
+                    </div>
+
+                    <!-- Mood Selection Grid -->
+                    <div class="space-y-10">
+                        <h3 class="text-[11px] uppercase tracking-[0.4em] text-stone-500 font-bold">Current State of Mind</h3>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 px-4">
+                            <button onclick="prefillMood('🤔', 'I am confused about a big life decision.')" class="mood-btn p-6 rounded-[2rem] flex flex-col items-center gap-4 group">
+                                <span class="text-3xl group-hover:scale-110 transition-transform">🤔</span>
+                                <span class="text-[9px] font-bold uppercase tracking-[0.3em] text-stone-400 group-hover:text-orange-400 transition-colors">Confused</span>
+                            </button>
+                            <button onclick="prefillMood('😟', 'I am feeling anxious about my future.')" class="mood-btn p-6 rounded-[2rem] flex flex-col items-center gap-4 group">
+                                <span class="text-3xl group-hover:scale-110 transition-transform">😟</span>
+                                <span class="text-[9px] font-bold uppercase tracking-[0.3em] text-stone-400 group-hover:text-orange-400 transition-colors">Anxious</span>
+                            </button>
+                            <button onclick="prefillMood('🔥', 'I am feeling angry and restless.')" class="mood-btn p-6 rounded-[2rem] flex flex-col items-center gap-4 group">
+                                <span class="text-3xl group-hover:scale-110 transition-transform">🔥</span>
+                                <span class="text-[9px] font-bold uppercase tracking-[0.3em] text-stone-400 group-hover:text-orange-400 transition-colors">Angry</span>
+                            </button>
+                            <button onclick="prefillMood('🧘', 'Help me find the true purpose of my existence.')" class="mood-btn p-6 rounded-[2rem] flex flex-col items-center gap-4 group">
+                                <span class="text-3xl group-hover:scale-110 transition-transform">🧘</span>
+                                <span class="text-[9px] font-bold uppercase tracking-[0.3em] text-stone-400 group-hover:text-orange-400 transition-colors">Seeking</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
+            
+            <!-- Message List -->
+            <div id="messages-anchor" class="max-w-4xl mx-auto w-full"></div>
         </div>
 
         <!-- Typing Indicator -->
-        <div id="typing-indicator" class="hidden absolute bottom-28 left-8 px-6 py-2.5 bg-black/60 backdrop-blur-xl rounded-full flex items-center space-x-3 text-stone-400 italic text-sm border border-white/10 shadow-2xl">
-            <span class="loader"></span>
-            <span>Reflecting on the eternal path...</span>
+        <div id="typing-indicator" class="hidden absolute bottom-28 left-1/2 -translate-x-1/2 px-8 py-3 bg-black/80 backdrop-blur-2xl rounded-full flex items-center space-x-4 text-stone-400 italic text-sm border border-white/10 shadow-2xl z-20">
+            <span class="loader border-orange-500"></span>
+            <span class="tracking-widest uppercase text-[10px] font-bold">Seeking Wisdom...</span>
         </div>
 
-        <!-- Input Bar -->
-        <div class="p-6 bg-black/40 backdrop-blur-3xl border-t border-white/5">
+        <!-- Input Section -->
+        <div class="p-6 bg-black/40 backdrop-blur-3xl border-t border-white/5 shrink-0">
             <div class="max-w-4xl mx-auto relative flex items-end gap-4">
-                <button id="mic-btn" class="bg-white/5 hover:bg-white/10 text-stone-400 p-4 rounded-2xl transition-all mb-1 border border-white/5">
+                <button id="mic-btn" class="bg-white/5 hover:bg-white/10 text-stone-400 p-5 rounded-[1.5rem] transition-all mb-1 border border-white/10 active:scale-90">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
                     </svg>
@@ -243,26 +311,27 @@
                     <textarea 
                         id="user-input" 
                         rows="1" 
-                        class="w-full parchment p-4 pr-16 rounded-3xl focus:outline-none focus:ring-2 focus:ring-orange-500/20 transition-all resize-none max-h-48 text-white bg-white/5 border border-white/10 placeholder-stone-500" 
-                        placeholder="Share your burden in any language..."
+                        class="w-full parchment p-4 pr-16 rounded-[1.2rem] transition-all resize-none max-h-48 text-white border border-white/10 placeholder-stone-600 focus:border-orange-500/50 leading-relaxed text-lg" 
+                        placeholder="Pour your soul here..."
                         oninput="autoResize(this)"
                     ></textarea>
                     
-                    <button id="send-btn" class="absolute right-2 bottom-2 bg-orange-600 hover:bg-orange-700 text-white p-3.5 rounded-2xl transition-all shadow-xl disabled:opacity-20 flex items-center justify-center">
+                    <button id="send-btn" class="absolute right-3 bottom-2 bg-orange-600 hover:bg-orange-700 text-white p-3 rounded-2xl transition-all shadow-2xl disabled:opacity-20 flex items-center justify-center active:scale-95">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
                            <path d="M3.4 20.4l17.45-8.48c.32-.15.32-.6 0-.75L3.4 2.6c-.33-.16-.67.14-.54.46l2.12 6.64c.03.1.12.18.23.19l8.29.9c.11.01.11.17 0 .18l-8.29.9c-.11.01-.2.09-.23.19L2.86 19.94c-.13.32.21.62.54.46z"/>
                         </svg>
                     </button>
                 </div>
                 
-                <button id="summary-btn" class="mb-1 p-4 bg-orange-600/10 text-orange-500 rounded-2xl shadow-inner border border-orange-500/10 hover:scale-105 transition-all" title="✨ Summary">
+                <button id="summary-btn" class="mb-1 p-5 bg-orange-600/10 text-orange-500 rounded-[1.5rem] border border-orange-500/10 hover:scale-105 transition-all shadow-inner" title="Essence of Conversation">
                     ✨
                 </button>
             </div>
-            <p class="text-[10px] text-center text-stone-500 mt-3 uppercase tracking-widest font-medium">Ancient Wisdom • ✨ AI Insights • Krishna's Guidance</p>
+            <p id="lang-hint" class="text-[10px] text-center text-stone-500 mt-4 uppercase tracking-[0.5em] font-bold opacity-60">Language: English • Ancient Wisdom Engine</p>
         </div>
     </main>
 
+    <!-- Invisible Audio for TTS -->
     <audio id="tts-player" class="hidden"></audio>
 
     <script>
@@ -271,69 +340,111 @@
         const ttsModel = "gemini-2.5-flash-preview-tts";
         
         const chatWindow = document.getElementById('chat-window');
+        const welcomeContent = document.getElementById('welcome-content');
+        const messagesAnchor = document.getElementById('messages-anchor');
         const userInput = document.getElementById('user-input');
         const sendBtn = document.getElementById('send-btn');
         const micBtn = document.getElementById('mic-btn');
         const reflectionBtn = document.getElementById('reflection-btn');
         const summaryBtn = document.getElementById('summary-btn');
         const typingIndicator = document.getElementById('typing-indicator');
-        const welcomeMessage = document.getElementById('welcome-message');
-        const dailyCard = document.getElementById('daily-card');
         const dailyText = document.getElementById('daily-text');
         const ttsPlayer = document.getElementById('tts-player');
+        const langHint = document.getElementById('lang-hint');
 
         let messageHistory = [];
+        let selectedLang = "English";
         let isRecording = false;
         let recognition;
 
         const SYSTEM_PROMPT = `You are "Gita GPT", an AI guide offering wisdom based on the Bhagavad Gita. 
-NEVER claim to be Krishna or a deity. Start every response with "Speak, Arjun," in the user's language. Respond ENTIRELY in that same language. Use Gita principles.`;
+NEVER claim to be Krishna or a deity. Start every response with "Speak, Arjun," translated to the user's language. Respond in the user's language. Use Gita principles.`;
+
+        function closeInstruction() {
+            document.getElementById('instruction-modal').classList.add('hidden');
+            document.getElementById('language-modal').classList.remove('hidden');
+        }
+
+        function setLang(lang) {
+            selectedLang = lang;
+            document.getElementById('language-modal').classList.add('hidden');
+            langHint.innerText = `Language: ${lang} • Ancient Wisdom Engine`;
+        }
 
         function createParticles() {
             const container = document.getElementById('particle-container');
-            for(let i=0; i<35; i++) {
+            for(let i=0; i<30; i++) {
                 const p = document.createElement('div');
                 p.className = 'particle';
-                const size = Math.random() * 3 + 1.5;
+                const size = Math.random() * 2 + 1;
                 p.style.width = size + 'px'; p.style.height = size + 'px';
                 p.style.left = Math.random() * 100 + 'vw';
                 p.style.setProperty('--d', (Math.random() * 12 + 8) + 's');
-                p.style.animationDelay = Math.random() * 15 + 's';
+                p.style.animationDelay = Math.random() * 5 + 's';
                 container.appendChild(p);
             }
         }
         createParticles();
 
-        const quotes = ["Change is the law of the universe.", "The soul is neither born, nor does it die.", "Perform your duty without attachment.", "Man is made by his belief.", "कर्मણ્યેવાધિકારસ્તે મા ફલેષુ કદાચન।"];
+        const quotes = [
+            "Change is the law of the universe.",
+            "You have the right to work, but never to the fruit of work.",
+            "Man is made by his belief. As he believes, so he is.",
+            "Expectation is the root of all misery.",
+            "Calmness is the discipline of the mind."
+        ];
         dailyText.innerText = quotes[Math.floor(Math.random() * quotes.length)];
 
-        function toggleTheme() {
-            document.body.classList.toggle('dark');
-            const icon = document.getElementById('theme-icon');
-            if (document.body.classList.contains('dark')) {
-                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z" />';
-            } else {
-                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />';
-            }
-        }
-
-        // Voice
+        // Speech Recognition
         if ('webkitSpeechRecognition' in window) {
             recognition = new webkitSpeechRecognition();
-            recognition.onstart = () => { micBtn.classList.add('voice-active'); isRecording = true; };
+            recognition.onstart = () => { micBtn.classList.add('bg-red-500/20', 'text-red-500'); isRecording = true; };
             recognition.onresult = (e) => { userInput.value = e.results[0][0].transcript; autoResize(userInput); handleSend(); };
-            recognition.onend = () => { micBtn.classList.remove('voice-active'); isRecording = false; };
+            recognition.onend = () => { micBtn.classList.remove('bg-red-500/20', 'text-red-500'); isRecording = false; };
         }
         micBtn.onclick = () => { if (isRecording) recognition.stop(); else recognition.start(); };
 
         function autoResize(textarea) { textarea.style.height = 'auto'; textarea.style.height = textarea.scrollHeight + 'px'; }
 
-        function prefillMood(label, text) { userInput.value = text; autoResize(userInput); handleSend(); }
+        function prefillMood(emoji, text) { userInput.value = text; autoResize(userInput); handleSend(); }
 
         function resetChat() {
-            messageHistory = []; chatWindow.innerHTML = '';
-            chatWindow.appendChild(dailyCard); chatWindow.appendChild(welcomeMessage);
-            welcomeMessage.style.display = 'block'; reflectionBtn.classList.add('hidden');
+            messageHistory = [];
+            messagesAnchor.innerHTML = '';
+            welcomeContent.classList.remove('hidden');
+            reflectionBtn.classList.add('hidden');
+        }
+
+        // --- PCM to WAV Conversion Helper (Fixes NotSupportedError) ---
+        function pcmToWav(base64, sampleRate = 24000) {
+            const buffer = Uint8Array.from(atob(base64), c => c.charCodeAt(0)).buffer;
+            const length = buffer.byteLength;
+            const wavHeader = new ArrayBuffer(44);
+            const view = new DataView(wavHeader);
+
+            // RIFF chunk
+            view.setUint32(0, 0x52494646, false); // "RIFF"
+            view.setUint32(4, 36 + length, true);
+            view.setUint32(8, 0x57415645, false); // "WAVE"
+            // format chunk
+            view.setUint32(12, 0x666d7420, false); // "fmt "
+            view.setUint32(16, 16, true); // size
+            view.setUint16(20, 1, true); // format PCM
+            view.setUint16(22, 1, true); // channel count
+            view.setUint32(24, sampleRate, true);
+            view.setUint32(28, sampleRate * 2, true); // byte rate (SampleRate * NumChannels * BitsPerSample/8)
+            view.setUint16(32, 2, true); // block align
+            view.setUint16(34, 16, true); // bits per sample
+            // data chunk
+            view.setUint32(36, 0x64617461, false); // "data"
+            view.setUint32(40, length, true);
+
+            const combined = new Uint8Array(wavHeader.byteLength + length);
+            combined.set(new Uint8Array(wavHeader), 0);
+            combined.set(new Uint8Array(buffer), wavHeader.byteLength);
+
+            const blob = new Blob([combined], { type: 'audio/wav' });
+            return URL.createObjectURL(blob);
         }
 
         async function fetchWithBackoff(url, options, retries = 5, delay = 1000) {
@@ -351,35 +462,56 @@ NEVER claim to be Krishna or a deity. Start every response with "Speak, Arjun," 
         }
 
         function appendMessage(role, content, isSpecial = false) {
-            if (welcomeMessage) welcomeMessage.style.display = 'none';
+            if (!welcomeContent.classList.contains('hidden')) {
+                welcomeContent.classList.add('hidden');
+            }
             if (role === 'model') reflectionBtn.classList.remove('hidden');
 
-            const wrapper = document.createElement('div');
-            wrapper.className = `flex ${role === 'user' ? 'justify-end' : 'justify-start'}`;
-            const container = document.createElement('div');
-            container.className = "flex flex-col max-w-[85%] gap-2";
+            const row = document.createElement('div');
+            row.className = `message-row ${role === 'user' ? 'user' : 'model'}`;
+            
             const bubble = document.createElement('div');
-            bubble.className = `message-bubble p-6 rounded-[2rem] ${
-                role === 'user' ? 'bg-orange-600 text-white rounded-tr-none shadow-md' 
-                : isSpecial ? 'bg-gradient-to-br from-orange-400 to-deep-saffron text-white rounded-tl-none border border-orange-300'
-                : 'parchment text-stone-100 rounded-tl-none border border-white/10 guide-text shadow-xl'
+            bubble.className = `message-bubble p-6 rounded-[2rem] shadow-2xl ${
+                role === 'user' ? 'bg-orange-600 text-white rounded-tr-none' 
+                : isSpecial ? 'bg-gradient-to-br from-orange-400 to-deep-saffron text-white rounded-tl-none'
+                : 'parchment text-stone-100 rounded-tl-none border border-white/10 guide-text'
             }`;
+            
             bubble.innerHTML = content.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong class="text-orange-400 font-bold">$1</strong>');
-            container.appendChild(bubble);
-
-            if (role === 'model') {
-                const actionRow = document.createElement('div');
-                actionRow.className = "flex gap-4 px-3";
+            
+            if (role === 'model' && !isSpecial) {
                 const listenBtn = document.createElement('button');
-                listenBtn.innerHTML = `Listen`;
-                listenBtn.className = "text-[11px] uppercase font-bold text-stone-500 hover:text-orange-500 transition-colors";
+                listenBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>Listen Insight`;
+                listenBtn.className = "text-[10px] uppercase font-bold text-orange-400 hover:text-white transition-colors mt-4 block pt-2 border-t border-white/5";
                 listenBtn.onclick = () => playWisdom(content);
-                actionRow.appendChild(listenBtn);
-                container.appendChild(actionRow);
+                bubble.appendChild(listenBtn);
             }
-            wrapper.appendChild(container);
-            chatWindow.appendChild(wrapper);
-            chatWindow.scrollTo({ top: chatWindow.scrollHeight, behavior: 'smooth' });
+
+            row.appendChild(bubble);
+            messagesAnchor.appendChild(row);
+            
+            setTimeout(() => {
+                chatWindow.scrollTo({ top: chatWindow.scrollHeight, behavior: 'smooth' });
+            }, 100);
+        }
+
+        async function playWisdom(text) {
+            const cleanText = text.replace(/<[^>]*>/g, '').substring(0, 600);
+            try {
+                const response = await fetchWithBackoff(`https://generativelanguage.googleapis.com/v1beta/models/${ttsModel}:generateContent?key=${apiKey}`, {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: `Say calmly: ${cleanText}` }] }],
+                        generationConfig: { responseModalities: ["AUDIO"], speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: "Kore" } } } }
+                    })
+                });
+                const audioData = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
+                if (audioData) {
+                    const audioUrl = pcmToWav(audioData, 24000);
+                    ttsPlayer.src = audioUrl;
+                    ttsPlayer.play();
+                }
+            } catch (e) { console.error("TTS Error:", e); }
         }
 
         reflectionBtn.onclick = async () => {
@@ -390,7 +522,7 @@ NEVER claim to be Krishna or a deity. Start every response with "Speak, Arjun," 
                 const response = await fetchWithBackoff(`https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`, {
                     method: 'POST', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        contents: [{ parts: [{ text: `Based on this concern: "${lastMsg}", generate a deep poetic spiritual prompt.` }] }],
+                        contents: [{ parts: [{ text: `Based on: "${lastMsg}", in ${selectedLang}, generate a deep 1-sentence poetic spiritual prompt.` }] }],
                         systemInstruction: { parts: [{ text: "You are a spiritual guide." }] }
                     })
                 });
@@ -408,35 +540,15 @@ NEVER claim to be Krishna or a deity. Start every response with "Speak, Arjun," 
                 const response = await fetchWithBackoff(`https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`, {
                     method: 'POST', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        contents: [{ parts: [{ text: `Summarize the spiritual essence of this: ${historyText}` }] }],
+                        contents: [{ parts: [{ text: `Summarize this in ${selectedLang}: ${historyText}` }] }],
                         systemInstruction: { parts: [{ text: "You are a wise philosopher." }] }
                     })
                 });
                 const summary = response.candidates?.[0]?.content?.parts?.[0]?.text;
-                if (summary) appendMessage('model', `✨ Wisdom: ${summary}`, true);
+                if (summary) appendMessage('model', `✨ Wisdom Essence: ${summary}`, true);
             } catch (e) { console.error(e); }
             finally { typingIndicator.classList.add('hidden'); }
         };
-
-        async function playWisdom(text) {
-            try {
-                const cleanText = text.replace(/<[^>]*>/g, '').substring(0, 400);
-                const response = await fetchWithBackoff(`https://generativelanguage.googleapis.com/v1beta/models/${ttsModel}:generateContent?key=${apiKey}`, {
-                    method: 'POST', headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: `Say in a calm voice: ${cleanText}` }] }],
-                        generationConfig: { responseModalities: ["AUDIO"], speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: "Kore" } } } }
-                    })
-                });
-                const audioData = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
-                if (audioData) {
-                    const buffer = Uint8Array.from(atob(audioData), c => c.charCodeAt(0)).buffer;
-                    const blob = new Blob([buffer], { type: 'audio/wav' });
-                    ttsPlayer.src = URL.createObjectURL(blob);
-                    ttsPlayer.play();
-                }
-            } catch (e) { console.error(e); }
-        }
 
         async function handleSend() {
             const text = userInput.value.trim();
@@ -450,7 +562,7 @@ NEVER claim to be Krishna or a deity. Start every response with "Speak, Arjun," 
                     method: 'POST', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         contents: messageHistory,
-                        systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
+                        systemInstruction: { parts: [{ text: `${SYSTEM_PROMPT} Ensure the answer is in ${selectedLang}.` }] },
                         tools: [{ "google_search": {} }]
                     })
                 });
