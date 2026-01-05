@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gita Marg| Universal Wisdom</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --saffron: #f4a261;
+            --deep-saffron: #e76f51;
+            --cream: #fdfaf5;
+            --ink: #2c3e50;
+            --stone-bg: #f5f2eb;
+            --parchment: #fffdfa;
+            --border: #e2ddd3;
+        }
+
+        .dark {
+            --stone-bg: #0a0a0c;
+            --ink: #e5e7eb;
+            --parchment: rgba(30, 30, 35, 0.85);
+            --border: #374151;
+            --cream: #18181b;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background-color: var(--stone-bg);
+            color: var(--ink);
+            overflow-x: hidden;
+            transition: background-color 0.4s ease, color 0.4s ease;
+            position: relative;
+        }
+
+        /* Divine Background Animation */
+        .divine-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            background: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #0a0a0c 100%);
+        }
+
+        .aura {
+            position: absolute;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(244, 162, 97, 0.12) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(100px);
+            animation: moveAura 25s infinite alternate ease-in-out;
+        }
+
+        @keyframes moveAura {
+            0% { transform: translate(-20%, -10%); }
+            100% { transform: translate(30%, 40%); }
+        }
+
+        .particle {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.2;
+            pointer-events: none;
+            animation: floatUp var(--d) linear infinite;
+        }
+
+        @keyframes floatUp {
+            from { transform: translateY(110vh) scale(0); opacity: 0; }
+            to { transform: translateY(-10vh) scale(1.2); opacity: 0.4; }
+        }
+
+        h1, h2, h3, .font-cinzel {
+            font-family: 'Cinzel', serif;
+        }
+
+        .chat-container {
+            scrollbar-width: thin;
+            scrollbar-color: var(--saffron) transparent;
+        }
+
+        .chat-container::-webkit-scrollbar { width: 6px; }
+        .chat-container::-webkit-scrollbar-thumb { background-color: var(--saffron); border-radius: 10px; }
+
+        .message-bubble {
+            max-width: 85%;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .parchment {
+            background: var(--parchment);
+            border: 1px solid var(--border);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            backdrop-filter: blur(12px);
+        }
+
+        .loader {
+            width: 20px; height: 20px;
+            border: 2px solid var(--saffron);
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            display: inline-block;
+            animation: rotation 1s linear infinite;
+        }
+
+        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .mood-btn {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mood-btn:hover {
+            transform: translateY(-5px) scale(1.02);
+            background: rgba(244, 162, 97, 0.15);
+            border-color: var(--saffron);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .shloka-box {
+            border-left: 4px solid var(--saffron);
+            padding: 1rem;
+            margin: 1rem 0;
+            background: rgba(244, 162, 97, 0.08);
+            font-style: italic;
+            color: var(--saffron);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col dark">
+
+    <!-- Divine Animated Background -->
+    <div class="divine-bg">
+        <div class="aura" style="top: 5%; left: 10%;"></div>
+        <div class="aura" style="bottom: 5%; right: 5%; background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 70%);"></div>
+        <div id="particle-container"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="sticky top-0 z-30 py-4 px-6 border-b border-white/10 bg-black/50 backdrop-blur-2xl flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-orange-100 dark:bg-orange-900/40 rounded-full flex items-center justify-center text-orange-500 shadow-xl">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+            </div>
+            <div>
+                <h1 class="text-xl tracking-[0.25em] text-white uppercase font-bold">Gita GPT</h1>
+                <p class="text-[10px] text-stone-400 uppercase tracking-widest leading-none font-medium">Ancient Wisdom • Modern Guidance</p>
+            </div>
+        </div>
+        <div class="flex gap-2 md:gap-4 items-center">
+            <button id="reflection-btn" class="hidden md:flex items-center gap-2 text-[10px] uppercase font-bold text-orange-400 bg-orange-400/10 px-3 py-2 rounded-lg transition-all hover:bg-orange-400/20" title="Generate Meditative Insight">
+                ✨ Insight
+            </button>
+            <button onclick="toggleTheme()" class="p-2.5 text-stone-400 hover:text-white transition-colors rounded-full">
+                <svg id="theme-icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z" />
+                </svg>
+            </button>
+            <button onclick="resetChat()" class="text-stone-400 hover:text-white p-2.5 transition-colors rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex flex-col overflow-hidden relative">
+        <div id="chat-window" class="chat-container flex-grow overflow-y-auto p-4 md:p-8 space-y-10">
+            
+            <!-- Daily Quote -->
+            <div id="daily-card" class="max-w-xl mx-auto parchment p-8 rounded-[2rem] text-center space-y-4 mb-6 border border-white/5">
+                <span class="text-[11px] uppercase tracking-[0.4em] text-orange-500 font-bold block">Thought of the Day</span>
+                <p id="daily-text" class="italic text-stone-200 text-xl leading-relaxed"></p>
+            </div>
+
+            <!-- Welcome Screen -->
+            <div id="welcome-message" class="max-w-3xl mx-auto text-center py-6 space-y-12">
+                <div class="space-y-4">
+                    <h2 class="text-4xl text-white font-cinzel tracking-wider uppercase">Speak, Arjun</h2>
+                    <p class="text-stone-400 leading-relaxed max-w-lg mx-auto italic text-lg">
+                        The chariot of wisdom is ready. Seek guidance in any language.
+                    </p>
+                </div>
+
+                <!-- Mood Grid -->
+                <div class="space-y-8">
+                    <h3 class="text-xs uppercase tracking-[0.3em] text-stone-500 font-bold">What is the state of your mind?</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <button onclick="prefillMood('🤔 CONFUSED', 'I am confused about a big life decision.')" class="mood-btn p-8 rounded-3xl flex flex-col items-center gap-4">
+                            <span class="text-3xl">🤔</span>
+                            <span class="text-xs font-bold uppercase tracking-widest text-stone-300">Confused</span>
+                        </button>
+                        <button onclick="prefillMood('😟 ANXIOUS', 'મને ભવિષ્યની ખૂબ ચિંતા થઈ રહી છે.')" class="mood-btn p-8 rounded-3xl flex flex-col items-center gap-4">
+                            <span class="text-3xl">😟</span>
+                            <span class="text-xs font-bold uppercase tracking-widest text-stone-300">Anxious</span>
+                        </button>
+                        <button onclick="prefillMood('🔥 ANGRY', 'मुझे बहुत गुस्सा आ रहा है, मन अशांत है।')" class="mood-btn p-8 rounded-3xl flex flex-col items-center gap-4">
+                            <span class="text-3xl">🔥</span>
+                            <span class="text-xs font-bold uppercase tracking-widest text-stone-300">Angry</span>
+                        </button>
+                        <button onclick="prefillMood('🧘 SEEKING', 'Help me find the true purpose of my existence.')" class="mood-btn p-8 rounded-3xl flex flex-col items-center gap-4">
+                            <span class="text-3xl">🧘</span>
+                            <span class="text-xs font-bold uppercase tracking-widest text-stone-300">Seeking</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Typing Indicator -->
+        <div id="typing-indicator" class="hidden absolute bottom-28 left-8 px-6 py-2.5 bg-black/60 backdrop-blur-xl rounded-full flex items-center space-x-3 text-stone-400 italic text-sm border border-white/10 shadow-2xl">
+            <span class="loader"></span>
+            <span>Reflecting on the eternal path...</span>
+        </div>
+
+        <!-- Input Bar -->
+        <div class="p-6 bg-black/40 backdrop-blur-3xl border-t border-white/5">
+            <div class="max-w-4xl mx-auto relative flex items-end gap-4">
+                <button id="mic-btn" class="bg-white/5 hover:bg-white/10 text-stone-400 p-4 rounded-2xl transition-all mb-1 border border-white/5">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                    </svg>
+                </button>
+
+                <div class="relative flex-grow">
+                    <textarea 
+                        id="user-input" 
+                        rows="1" 
+                        class="w-full parchment p-4 pr-16 rounded-3xl focus:outline-none focus:ring-2 focus:ring-orange-500/20 transition-all resize-none max-h-48 text-white bg-white/5 border border-white/10 placeholder-stone-500" 
+                        placeholder="Share your burden in any language..."
+                        oninput="autoResize(this)"
+                    ></textarea>
+                    
+                    <button id="send-btn" class="absolute right-2 bottom-2 bg-orange-600 hover:bg-orange-700 text-white p-3.5 rounded-2xl transition-all shadow-xl disabled:opacity-20 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
+                           <path d="M3.4 20.4l17.45-8.48c.32-.15.32-.6 0-.75L3.4 2.6c-.33-.16-.67.14-.54.46l2.12 6.64c.03.1.12.18.23.19l8.29.9c.11.01.11.17 0 .18l-8.29.9c-.11.01-.2.09-.23.19L2.86 19.94c-.13.32.21.62.54.46z"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <button id="summary-btn" class="mb-1 p-4 bg-orange-600/10 text-orange-500 rounded-2xl shadow-inner border border-orange-500/10 hover:scale-105 transition-all" title="✨ Summary">
+                    ✨
+                </button>
+            </div>
+            <p class="text-[10px] text-center text-stone-500 mt-3 uppercase tracking-widest font-medium">Ancient Wisdom • ✨ AI Insights • Krishna's Guidance</p>
+        </div>
+    </main>
+
+    <audio id="tts-player" class="hidden"></audio>
+
+    <script>
+        const apiKey = ""; 
+        const modelName = "gemini-2.5-flash-preview-09-2025";
+        const ttsModel = "gemini-2.5-flash-preview-tts";
+        
+        const chatWindow = document.getElementById('chat-window');
+        const userInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
+        const micBtn = document.getElementById('mic-btn');
+        const reflectionBtn = document.getElementById('reflection-btn');
+        const summaryBtn = document.getElementById('summary-btn');
+        const typingIndicator = document.getElementById('typing-indicator');
+        const welcomeMessage = document.getElementById('welcome-message');
+        const dailyCard = document.getElementById('daily-card');
+        const dailyText = document.getElementById('daily-text');
+        const ttsPlayer = document.getElementById('tts-player');
+
+        let messageHistory = [];
+        let isRecording = false;
+        let recognition;
+
+        const SYSTEM_PROMPT = `You are "Gita GPT", an AI guide offering wisdom based on the Bhagavad Gita. 
+NEVER claim to be Krishna or a deity. Start every response with "Speak, Arjun," in the user's language. Respond ENTIRELY in that same language. Use Gita principles.`;
+
+        function createParticles() {
+            const container = document.getElementById('particle-container');
+            for(let i=0; i<35; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                const size = Math.random() * 3 + 1.5;
+                p.style.width = size + 'px'; p.style.height = size + 'px';
+                p.style.left = Math.random() * 100 + 'vw';
+                p.style.setProperty('--d', (Math.random() * 12 + 8) + 's');
+                p.style.animationDelay = Math.random() * 15 + 's';
+                container.appendChild(p);
+            }
+        }
+        createParticles();
+
+        const quotes = ["Change is the law of the universe.", "The soul is neither born, nor does it die.", "Perform your duty without attachment.", "Man is made by his belief.", "कर्मણ્યેવાધિકારસ્તે મા ફલેષુ કદાચન।"];
+        dailyText.innerText = quotes[Math.floor(Math.random() * quotes.length)];
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark');
+            const icon = document.getElementById('theme-icon');
+            if (document.body.classList.contains('dark')) {
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z" />';
+            } else {
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />';
+            }
+        }
+
+        // Voice
+        if ('webkitSpeechRecognition' in window) {
+            recognition = new webkitSpeechRecognition();
+            recognition.onstart = () => { micBtn.classList.add('voice-active'); isRecording = true; };
+            recognition.onresult = (e) => { userInput.value = e.results[0][0].transcript; autoResize(userInput); handleSend(); };
+            recognition.onend = () => { micBtn.classList.remove('voice-active'); isRecording = false; };
+        }
+        micBtn.onclick = () => { if (isRecording) recognition.stop(); else recognition.start(); };
+
+        function autoResize(textarea) { textarea.style.height = 'auto'; textarea.style.height = textarea.scrollHeight + 'px'; }
+
+        function prefillMood(label, text) { userInput.value = text; autoResize(userInput); handleSend(); }
+
+        function resetChat() {
+            messageHistory = []; chatWindow.innerHTML = '';
+            chatWindow.appendChild(dailyCard); chatWindow.appendChild(welcomeMessage);
+            welcomeMessage.style.display = 'block'; reflectionBtn.classList.add('hidden');
+        }
+
+        async function fetchWithBackoff(url, options, retries = 5, delay = 1000) {
+            try {
+                const response = await fetch(url, options);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                return await response.json();
+            } catch (error) {
+                if (retries > 0) {
+                    await new Promise(res => setTimeout(res, delay));
+                    return fetchWithBackoff(url, options, retries - 1, delay * 2);
+                }
+                throw error;
+            }
+        }
+
+        function appendMessage(role, content, isSpecial = false) {
+            if (welcomeMessage) welcomeMessage.style.display = 'none';
+            if (role === 'model') reflectionBtn.classList.remove('hidden');
+
+            const wrapper = document.createElement('div');
+            wrapper.className = `flex ${role === 'user' ? 'justify-end' : 'justify-start'}`;
+            const container = document.createElement('div');
+            container.className = "flex flex-col max-w-[85%] gap-2";
+            const bubble = document.createElement('div');
+            bubble.className = `message-bubble p-6 rounded-[2rem] ${
+                role === 'user' ? 'bg-orange-600 text-white rounded-tr-none shadow-md' 
+                : isSpecial ? 'bg-gradient-to-br from-orange-400 to-deep-saffron text-white rounded-tl-none border border-orange-300'
+                : 'parchment text-stone-100 rounded-tl-none border border-white/10 guide-text shadow-xl'
+            }`;
+            bubble.innerHTML = content.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong class="text-orange-400 font-bold">$1</strong>');
+            container.appendChild(bubble);
+
+            if (role === 'model') {
+                const actionRow = document.createElement('div');
+                actionRow.className = "flex gap-4 px-3";
+                const listenBtn = document.createElement('button');
+                listenBtn.innerHTML = `Listen`;
+                listenBtn.className = "text-[11px] uppercase font-bold text-stone-500 hover:text-orange-500 transition-colors";
+                listenBtn.onclick = () => playWisdom(content);
+                actionRow.appendChild(listenBtn);
+                container.appendChild(actionRow);
+            }
+            wrapper.appendChild(container);
+            chatWindow.appendChild(wrapper);
+            chatWindow.scrollTo({ top: chatWindow.scrollHeight, behavior: 'smooth' });
+        }
+
+        reflectionBtn.onclick = async () => {
+            if (messageHistory.length === 0) return;
+            typingIndicator.classList.remove('hidden');
+            try {
+                const lastMsg = messageHistory[messageHistory.length - 1].parts[0].text;
+                const response = await fetchWithBackoff(`https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`, {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: `Based on this concern: "${lastMsg}", generate a deep poetic spiritual prompt.` }] }],
+                        systemInstruction: { parts: [{ text: "You are a spiritual guide." }] }
+                    })
+                });
+                const insight = response.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (insight) appendMessage('model', `✨ Insight: ${insight}`, true);
+            } catch (e) { console.error(e); }
+            finally { typingIndicator.classList.add('hidden'); }
+        };
+
+        summaryBtn.onclick = async () => {
+            if (messageHistory.length < 2) return;
+            typingIndicator.classList.remove('hidden');
+            try {
+                const historyText = messageHistory.map(m => m.parts[0].text).join("\n");
+                const response = await fetchWithBackoff(`https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`, {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: `Summarize the spiritual essence of this: ${historyText}` }] }],
+                        systemInstruction: { parts: [{ text: "You are a wise philosopher." }] }
+                    })
+                });
+                const summary = response.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (summary) appendMessage('model', `✨ Wisdom: ${summary}`, true);
+            } catch (e) { console.error(e); }
+            finally { typingIndicator.classList.add('hidden'); }
+        };
+
+        async function playWisdom(text) {
+            try {
+                const cleanText = text.replace(/<[^>]*>/g, '').substring(0, 400);
+                const response = await fetchWithBackoff(`https://generativelanguage.googleapis.com/v1beta/models/${ttsModel}:generateContent?key=${apiKey}`, {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: `Say in a calm voice: ${cleanText}` }] }],
+                        generationConfig: { responseModalities: ["AUDIO"], speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: "Kore" } } } }
+                    })
+                });
+                const audioData = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
+                if (audioData) {
+                    const buffer = Uint8Array.from(atob(audioData), c => c.charCodeAt(0)).buffer;
+                    const blob = new Blob([buffer], { type: 'audio/wav' });
+                    ttsPlayer.src = URL.createObjectURL(blob);
+                    ttsPlayer.play();
+                }
+            } catch (e) { console.error(e); }
+        }
+
+        async function handleSend() {
+            const text = userInput.value.trim();
+            if (!text || sendBtn.disabled) return;
+            userInput.value = ''; userInput.style.height = 'auto';
+            appendMessage('user', text);
+            messageHistory.push({ role: "user", parts: [{ text: text }] });
+            sendBtn.disabled = true; typingIndicator.classList.remove('hidden');
+            try {
+                const response = await fetchWithBackoff(`https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`, {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: messageHistory,
+                        systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
+                        tools: [{ "google_search": {} }]
+                    })
+                });
+                const aiResponse = response.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (aiResponse) {
+                    appendMessage('model', aiResponse);
+                    messageHistory.push({ role: "model", parts: [{ text: aiResponse }] });
+                }
+            } catch (error) { console.error(error); } 
+            finally { sendBtn.disabled = false; typingIndicator.classList.add('hidden'); }
+        }
+        sendBtn.onclick = handleSend;
+        userInput.onkeydown = (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); } };
+        window.onload = () => userInput.focus();
+    </script>
+</body>
+</html>
